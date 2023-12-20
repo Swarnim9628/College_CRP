@@ -1,0 +1,144 @@
+{% extends 'student_template/base_template.html' %}
+
+{% block page_title %}
+Document List
+{% endblock page_title %}
+
+{% block main_content %}
+{% load static %}
+
+<style>
+  body {
+      font-family: 'Arial', sans-serif;
+      background-color: #f0f0f0;
+      margin: 0;
+      padding: 0;
+  }
+
+  .upload-container {
+    display: flex;
+    justify-content: center;
+    margin: 0;
+    padding: 0;
+  }
+
+  .green-button {
+    width: 20%;
+    background-color: #4caf50;
+    color: #fff;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+  .green-button:hover {
+    transform: scale(1.05);
+  }
+
+  h1 {
+      color: #333;
+  }
+
+  .document-list {
+      width: 80%;
+      margin: 20px auto;
+      border-collapse: collapse;
+  }
+
+  .document-list th, .document-list td {
+      border: 1px solid #ddd;
+      padding: 10px;
+      text-align: left;
+  }
+
+  .document-list th {
+      background-color: #4caf50;
+      color: #fff;
+  }
+
+  .document-list tbody tr:nth-child(even) {
+      background-color: #f2f2f2;
+  }
+
+  .action-link {
+      display: inline-block;
+      margin-right: 10px;
+      color: #3498db;
+      text-decoration: none;
+  }
+
+  .upload-link {
+      color: #2ecc71;
+      text-decoration: none;
+      font-weight: bold;
+  }
+
+  .upload-link:hover, .action-link:hover {
+      text-decoration: underline;
+  }
+</style>
+<section class="content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card card-primary">
+          <div class="card-header">
+            <h3 class="card-title">Document List</h3>
+          </div>
+
+          <body>
+            <div>
+              <table class="document-list">
+                <thead>
+                  <tr>
+                    <th>Title</th>
+                    <th>File Name</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for document in documents %}
+                  <tr>
+                    <td>{{ document.title }}</td>
+                    <td>{{ document.file.name }}</td>
+                    <td>
+                      <a
+                        href="{{ document.file.url }}"
+                        download
+                        class="action-link"
+                      >Download</a
+                      >
+                      <a
+                        href="{% url 'delete_document' document.pk %}"
+                        class="action-link"
+                      >Delete</a
+                      >
+                    </td>
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </div>
+            </table>
+            <div class="upload-container">
+              <button
+                type="button"
+                onclick="window.location.href='{% url 'upload_document' %}'"
+                class="green-button"
+              >
+                Upload New Document
+              </button>
+            </div>
+          </body>
+        </html>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+{% endblock main_content %}
+
+{% block custom_js %}
+<!-- Add your custom JavaScript code here if needed -->
+{% endblock custom_js %}

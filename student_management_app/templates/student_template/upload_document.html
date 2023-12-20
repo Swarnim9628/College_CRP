@@ -1,0 +1,168 @@
+{% extends 'student_template/base_template.html' %}
+
+{% block page_title %}
+Upload Documents
+{% endblock page_title %}
+
+{% block main_content %}
+{% load static %}
+
+<style>
+  body {
+    font-family: "Arial", sans-serif;
+    background-color: #f0f0f0;
+    margin: 0;
+    padding: 0;
+  }
+
+  h1 {
+    color: #333;
+  }
+
+  form {
+    max-width: 400px;
+    margin: 2rem auto;
+    padding: 10px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+  }
+
+  label {
+    display: block;
+    margin-bottom: 5px;
+    color: #555;
+  }
+
+  input[type="file"],
+  input[type="text"],
+  textarea {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    box-sizing: border-box;
+  }
+
+  textarea {
+    resize: vertical;
+    font-family: inherit;
+  }
+
+  button {
+    width: 48%;
+    background-color: #4caf50;
+    color: #fff;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+  button:hover {
+    background-color: #45a049;
+  }
+
+  a {
+    color: #333;
+    text-decoration: none;
+    display: inline-block;
+    margin-top: 10px;
+  }
+
+  a:hover {
+    text-decoration: underline;
+  }
+
+  .u-mt-1 {
+    margin-top: 0.8rem;
+  }
+
+  .u-mt-2 {
+    margin-top: 1.6rem;
+  }
+
+  .u-flex {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .button-container {
+    padding: 15px;
+    background-color: #fff; /* Set this to your desired background color */
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin: 0 auto;
+  }
+  .button-container button:hover {
+    transform: scale(1.05); /* Subtle scale animation */
+  }
+
+</style>
+<section class="content">
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="card card-primary">
+					<div class="card-header">
+						<h3 class="card-title">Upload Documents</h3>
+					</div>
+
+					<body>
+						<form
+							action="{% url 'upload_document' %}"
+							method="post"
+							enctype="multipart/form-data"
+						>
+							<div>
+								{% if error_message %}
+								<script>
+									alert("{{ error_message }}");
+								</script>
+								{% endif %}
+
+								{% csrf_token %}
+								<label for="file" class="u-mt-2"
+									>Select File:<input type="file" id="file" name="file" required
+								/></label>
+								<label for="title" class="u-mt-1">Document Title:</label>
+								<input
+									type="text"
+									id="title"
+									name="title"
+									placeholder="Title.."
+									required
+									maxlength="100"
+								/>
+								<br />
+								<label for="description" class="u-mt-2">
+									Document Description (Optional):</label>
+								<textarea
+									id="description"
+									name="description"
+									rows="3"
+									placeholder="Brief description.."
+								></textarea>
+								<br />
+
+								<div class="button-container u-flex u-mt-1">
+									<button type="submit">Upload</button>
+									<button type="button" onclick="window.location.href='{% url 'student_home' %}'">Cancel</button>
+								</div>
+
+								<p class="u-mt-2 u-flex" style="font-size: 0.8rem; opacity: 0.9;">* Supported file formats: PDF, DOCX, TXT</p>
+								<p class="u-mt-1 u-flex" style="font-size: 0.8rem; opacity: 0.8;">* Maximum file size: 5MB</p>
+							</div>
+						</form>
+					</body>
+				</div>
+			</div>
+		</div>
+
+	</div><!-- /.container-fluid -->
+</section>
+
+{% endblock main_content %}
+
+{% block custom_js %}
+
+{% endblock custom_js %}
